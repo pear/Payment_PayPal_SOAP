@@ -34,9 +34,9 @@
 require_once 'PEAR/PackageFileManager2.php';
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-$release_version = '0.0.12';
+$release_version = '0.1.0';
 $release_state   = 'alpha';
-$release_notes   = 'Initial PEAR proposal.';
+$release_notes   = 'First PEAR release.';
 
 $description =
     "This package provides an easy-to-use wrapper of PHP 5's SOAP client " .
