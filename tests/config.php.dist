@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * This is the unit test configuration file for Payment_PayPal_SOAP
+ *
+ * All array keys correspond to the Payment_PayPal_SOAP_Client constructor
+ * parameters. Signature and certificate file are optional but at least one of
+ * them must be specified.
+ *
+ * @category  Payment
+ * @package   Payment_PayPal_SOAP
+ * @author    Michael Gauthier <mike@silverorange.com>
+ * @copyright 2008 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @version   CVS: $Id: config.php.dist,v 1.1 2008-08-28 21:44:00 gauthierm Exp $
+ * @link      http://pear.php.net/package/Payment_PayPal_SOAP
+ */
+
+$GLOBALS['Payment_PayPal_SOAP_Unittest_Config'] = array(
+    'mode'        => 'sandbox',
+    'username'    => 'seller_1105382414_biz_api1.example.com',
+    'password'    => '1059386480',
+    'signature'   => 'AUcWxi21C7fd0v3bYY4RCpSSRt31AsyWli6SjjA18AdqzOH7lT0r3JKS',
+    'certificate' => null
+);
+
+?>
