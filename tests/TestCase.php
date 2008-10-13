@@ -62,7 +62,7 @@ require_once 'Payment/PayPal/SOAP/Client.php';
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
-abstract class TestCase extends PHPUnit_Framework_TestCase
+abstract class Payment_PayPal_SOAP_TestCase extends PHPUnit_Framework_TestCase
 {
     // {{{ protected properties
 
@@ -77,29 +77,29 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $config = array();
 
     // }}}
-    // {{{ __construct()
-
-    public function __construct($name = null)
-    {
-        parent::__construct($name);
-
-        if (!file_exists(dirname(__FILE__).'/config.php')) {
-            throw new Exception('Unit test configuration file is missing. ' .
-                'Please read the documentation in TestCase.php and create ' .
-                'a configuration file. See the example configuration provided '.
-                'in config.php.dist for an example.');
-        }
-
-        include_once dirname(__FILE__).'/config.php';
-
-        $this->config = $GLOBALS['Payment_PayPal_SOAP_Unittest_Config'];
-    }
-
-    // }}}
     // {{{ setUp()
 
     public function setUp()
     {
+        $configFilename = dirname(__FILE__).'/config.php';
+
+        if (!file_exists($configFilename)) {
+            $this->markTestSkipped('Unit test configuration is missing. ' .
+                'Please read the documentation in TestCase.php and create a ' .
+                'configuration file. See the configuration in ' .
+                '\'config.php.dist\' for an example.');
+        }
+
+        include $configFilename;
+
+        if (!is_array($GLOBALS['Payment_PayPal_SOAP_Unittest_Config'])) {
+            $this->markTestSkipped('Unit test configuration is incorrect. ' .
+                'Please read the documentation in TestCase.php and fix the ' .
+                'configuration file. See the configuration in ' .
+                '\'config.php.dist\' for an example.');
+        }
+
+        $this->config = $GLOBALS['Payment_PayPal_SOAP_Unittest_Config'];
         $this->client = new Payment_PayPal_SOAP_Client($this->config);
     }
 

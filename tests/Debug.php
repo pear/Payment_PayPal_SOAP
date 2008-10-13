@@ -16,7 +16,7 @@ require_once 'TestCase.php';
  * @version   CVS: $Id$
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
-class Debug extends TestCase
+class Debug extends Payment_PayPal_SOAP_TestCase
 {
     // {{{ private properties
 

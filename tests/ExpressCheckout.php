@@ -15,7 +15,7 @@ require_once 'TestCase.php';
  * @version   CVS: $Id$
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
-class ExpressCheckout extends TestCase
+class ExpressCheckout extends Payment_PayPal_SOAP_TestCase
 {
     // {{{ testSetExpressCheckout()
 

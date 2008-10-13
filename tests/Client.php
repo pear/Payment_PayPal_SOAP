@@ -15,7 +15,7 @@ require_once 'TestCase.php';
  * @version   CVS: $Id$
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
-class Client extends TestCase
+class Client extends Payment_PayPal_SOAP_TestCase
 {
     // {{{ testNoUsername()
 
