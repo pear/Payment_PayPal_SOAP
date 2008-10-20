@@ -92,7 +92,9 @@ abstract class Payment_PayPal_SOAP_TestCase extends PHPUnit_Framework_TestCase
 
         include $configFilename;
 
-        if (!is_array($GLOBALS['Payment_PayPal_SOAP_Unittest_Config'])) {
+        if (   !isset($GLOBALS['Payment_PayPal_SOAP_Unittest_Config'])
+            || !is_array($GLOBALS['Payment_PayPal_SOAP_Unittest_Config'])
+        ) {
             $this->markTestSkipped('Unit test configuration is incorrect. ' .
                 'Please read the documentation in TestCase.php and fix the ' .
                 'configuration file. See the configuration in ' .
