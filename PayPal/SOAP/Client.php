@@ -581,7 +581,7 @@ class Payment_PayPal_SOAP_Client
     }
 
     // }}}
-    // {{{ setCerticicateFile()
+    // {{{ setCertificateFile()
 
     /**
      * Sets the local certificate file used for certificate-based
