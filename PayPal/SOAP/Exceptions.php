@@ -265,19 +265,100 @@ class Payment_PayPal_SOAP_FaultException extends
 /**
  * Exception thrown when the SOAP response contains one or more Error elements
  *
- * A detailed error message is present in the message field and the error
- * severity is present in the code field.
+ * A detailed error message is present in the message field, the PayPal error
+ * code is present in the code field. The error severity is retrieved using the
+ * {@link Payment_PayPal_SOAP_ErrorException::getSeverity()} method and the
+ * full response object may be retrieved using the
+ * {@link Payment_PayPal_SOAP_ErrorException::getResponse()} method.
  *
  * @category  Payment
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
- * @copyright 2008 silverorange
+ * @copyright 2008-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
 class Payment_PayPal_SOAP_ErrorException extends
     Payment_PayPal_SOAP_Exception
 {
+    // {{{ private properties
+
+    /**
+     * The severity of the PayPal error
+     *
+     * @var integer
+     *
+     * @see Payment_PayPal_SOAP_ErrorException::getSeverity()
+     */
+    private $_severity = Payment_PayPal_SOAP::ERROR_UNKNOWN;
+
+    /**
+     * The response object that contains the PayPal error
+     *
+     * @var stdClass
+     *
+     * @see Payment_PayPal_SOAP_ErrorException::getResponse()
+     */
+    private $_response = null;
+
+    // }}}
+    // {{{ __construct()
+
+    /**
+     * Creates a new error exception
+     *
+     * @param string   $message  the exception message.
+     * @param integer  $code     the PayPal error code.
+     * @param integer  $severity the severity of the PayPal error.
+     * @param stdClass $response the response object that contains the PayPal
+     *                           error.
+     */
+    public function __construct($message, $code, $severity, $response)
+    {
+        parent::__construct($message, $code);
+        $this->_severity = $severity;
+        $this->_response = $response;
+    }
+
+    // }}}
+    // {{{ getSeverity()
+
+    /**
+     * Gets the severity of the PayPal error
+     *
+     * Will be one of the following:
+     *
+     * - {@link Payment_PayPal_SOAP::ERROR_WARNING},
+     * - {@link Payment_PayPal_SOAP::ERROR_ERROR}, or
+     * - {@link Payment_PayPal_SOAP::ERROR_UNKNOWN}
+     *
+     * @return integer the severity level of the PayPal error.
+     *
+     * @see PaymentPayPal_SOAP_ErrorException::$_severity
+     */
+    public function getSeverity()
+    {
+        return $this->_severity;
+    }
+
+    // }}}
+    // {{{ getResponse()
+
+    /**
+     * Gets the response object containing the PayPal error
+     *
+     * Additional information about the error may be present here.
+     *
+     * @return stdClass the response object containing the PayPal error.
+     *
+     * @see PaymentPayPal_SOAP_ErrorException::$_response
+     */
+    public function getResponse()
+    {
+        return $this->_response;
+    }
+
+    // }}}
 }
 
 // }}}

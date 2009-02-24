@@ -355,18 +355,19 @@ class Payment_PayPal_SOAP_Client
                 } else {
                     $error = $response->Errors;
                 }
+
                 $message = (isset($error->LongMessage)) ?
                     $error->LongMessage : $error->ShortMessage;
 
                 switch ($error->SeverityCode) {
                 case 'Warning':
-                    $code = Payment_PayPal_SOAP::ERROR_WARNING;
+                    $severity = Payment_PayPal_SOAP::ERROR_WARNING;
                     break;
                 case 'Error':
-                    $code = Payment_PayPal_SOAP::ERROR_ERROR;
+                    $severity = Payment_PayPal_SOAP::ERROR_ERROR;
                     break;
                 default:
-                    $code = Payment_PayPal_SOAP::ERROR_UNKNOWN;
+                    $severity = Payment_PayPal_SOAP::ERROR_UNKNOWN;
                     break;
                 }
 
@@ -374,11 +375,18 @@ class Payment_PayPal_SOAP_Client
                 if (preg_match($expiredTokenExp, $message) === 1) {
                     throw new Payment_PayPal_SOAP_ExpiredTokenException(
                         'Expired token used for PayPal SOAP request: ' .
-                        $message, $code);
+                        $message,
+                        $error->ErrorCode,
+                        $severity,
+                        $response
+                    );
                 } else {
                     throw new Payment_PayPal_SOAP_ErrorException(
                         'Error present in PayPal SOAP response: ' . $message,
-                        $code);
+                        $error->ErrorCode,
+                        $severity,
+                        $response
+                    );
                 }
             }
 
