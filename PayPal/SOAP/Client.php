@@ -376,14 +376,14 @@ class Payment_PayPal_SOAP_Client
                     throw new Payment_PayPal_SOAP_ExpiredTokenException(
                         'Expired token used for PayPal SOAP request: ' .
                         $message,
-                        $error->ErrorCode,
+                        intval($error->ErrorCode),
                         $severity,
                         $response
                     );
                 } else {
                     throw new Payment_PayPal_SOAP_ErrorException(
                         'Error present in PayPal SOAP response: ' . $message,
-                        $error->ErrorCode,
+                        intval($error->ErrorCode),
                         $severity,
                         $response
                     );
