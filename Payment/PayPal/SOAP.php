@@ -439,7 +439,7 @@ abstract class Payment_PayPal_SOAP
 
             // Unknown SOAP exception, pass it along.
             throw new Payment_PayPal_SOAP_FaultException('PayPal SOAP Error: ' .
-                $e->getMessage(), $e, $e->getCode());
+                $e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -484,7 +484,7 @@ abstract class Payment_PayPal_SOAP
     }
 
     // }}}
-    // {{{ __setSoapClient()
+    // {{{ setSoapClient()
 
     /**
      * Sets a SOAP client to use for SOAP requests
@@ -580,7 +580,7 @@ abstract class Payment_PayPal_SOAP
      */
     protected function setUsername($username)
     {
-        $this->_username = (string)$username;
+        $this->_username = strval($username);
     }
 
     // }}}
@@ -598,7 +598,7 @@ abstract class Payment_PayPal_SOAP
      */
     protected function setPassword($password)
     {
-        $this->_password = (string)$password;
+        $this->_password = strval($password);
     }
 
     // }}}
@@ -617,7 +617,7 @@ abstract class Payment_PayPal_SOAP
      */
     protected function setSignature($signature)
     {
-        $this->_signature = (string)$signature;
+        $this->_signature = strval($signature);
     }
 
     // }}}
@@ -640,7 +640,7 @@ abstract class Payment_PayPal_SOAP
      */
     protected function setCertificateFile($certificateFile)
     {
-        $certificateFile = (string)$certificateFile;
+        $certificateFile = strval($certificateFile);
         if ($certificateFile) {
             $this->soapOptions['local_cert'] = $certificateFile;
         }
@@ -666,7 +666,7 @@ abstract class Payment_PayPal_SOAP
      */
     protected function setMode($mode)
     {
-        $mode = (string)$mode;
+        $mode = strval($mode);
 
         $validModes = array('sandbox', 'live');
         if (!in_array($mode, $validModes)) {
