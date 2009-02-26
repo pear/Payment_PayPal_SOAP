@@ -263,6 +263,47 @@ class Payment_PayPal_SOAP_MissingPropertyException extends
 class Payment_PayPal_SOAP_FaultException extends
     Payment_PayPal_SOAP_Exception
 {
+    // {{{ private properties
+
+    /**
+     * The original SoapFault that caused this exception to be thrown
+     *
+     * @var SoapFault
+     * @see Payment_PayPal_SOAP_FaultException::getSoapFault()
+     */
+    private $_soapFault = null;
+
+    // }}}
+    // {{{ public function __construct()
+
+    /**
+     * Creates a new PayPal SOAP fault exception
+     *
+     * @param string    $message   the exception message.
+     * @param integer   $code      the exception code.
+     * @param SoapFault $soapFault the original SoapFault.
+     */
+    public function __construct($message, $code, SoapFault $soapFault)
+    {
+        parent::__construct($message, $code);
+        $this->_soapFault = $soapFault;
+    }
+
+    // }}}
+    // {{{ getSoapFault()
+
+    /**
+     * Gets the original SoapFault that caused this exception to be thrown
+     *
+     * @return SoapFault the original SoapFault that caused this exception to
+     *                   be thrown.
+     */
+    public function getSoapFault()
+    {
+        return $this->_soapFault;
+    }
+
+    // }}}
 }
 
 // }}}
