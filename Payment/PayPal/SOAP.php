@@ -484,6 +484,23 @@ abstract class Payment_PayPal_SOAP
     }
 
     // }}}
+    // {{{ __setSoapClient()
+
+    /**
+     * Sets a SOAP client to use for SOAP requests
+     *
+     * This is useful for testing.
+     *
+     * @param SoapClient $client the SOAP client to use.
+     *
+     * @return void
+     */
+    public function setSoapClient(SoapClient $client)
+    {
+        $this->soapClient = $client;
+    }
+
+    // }}}
     // {{{ getSoapHeader()
 
     /**
@@ -534,12 +551,15 @@ abstract class Payment_PayPal_SOAP
      * @return SoapClient the SOAP client used to make PayPal SOAP calls.
      *
      * @see Payment_PayPal_SOAP::call()
+     * @see Payment_PayPal_SOAP::setSoapClient()
      */
     protected function getSoapClient()
     {
-        if ($this->soapClient === null) {
-            $this->soapClient = new SoapClient(self::$_wsdlFiles[$this->_mode],
-                $this->soapOptions);
+        if (!($this->soapClient instanceof SoapClient)) {
+            $this->soapClient = new SoapClient(
+                self::$_wsdlFiles[$this->_mode],
+                $this->soapOptions
+            );
         }
 
         return $this->soapClient;
