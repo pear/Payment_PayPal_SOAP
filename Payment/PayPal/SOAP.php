@@ -356,8 +356,13 @@ abstract class Payment_PayPal_SOAP
     {
         try {
             $client = $this->getSoapClient();
-            $response = $client->__soapCall($requestName, array($arguments),
-                null, $this->getSoapHeader());
+
+            $response = $client->__soapCall(
+                $requestName,
+                array($arguments),
+                null,
+                $this->getSoapHeader()
+            );
 
             if (isset($response->Errors)) {
                 if (is_array($response->Errors)) {
