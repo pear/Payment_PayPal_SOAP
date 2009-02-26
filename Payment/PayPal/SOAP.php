@@ -68,7 +68,7 @@ require_once 'Payment/PayPal/SOAP/Exceptions.php';
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
-abstract class Payment_PayPal_SOAP
+class Payment_PayPal_SOAP
 {
     // {{{ class constants
 
