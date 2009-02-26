@@ -11,7 +11,7 @@ require_once 'TestCase.php';
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
  * @copyright 2008-2009 silverorange
- * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  * @version   CVS: $Id$
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */

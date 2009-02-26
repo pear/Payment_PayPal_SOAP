@@ -10,9 +10,9 @@
  * @category  Payment
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
- * @copyright 2008 silverorange
- * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
- * @version   CVS: $Id: config.php.dist,v 1.1 2008-08-28 21:44:00 gauthierm Exp $
+ * @copyright 2008-2009 silverorange
+ * @license   http://www.opensource.org/licenses/mit-license.html MIT License
+ * @version   CVS: $Id: config.php.dist,v 1.2 2009-02-26 04:17:41 gauthierm Exp $
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
 
