@@ -189,7 +189,7 @@ class Payment_PayPal_SOAP_InvalidRequestNameException extends
 
 /**
  * Exception thrown when a required request property is missing in the
- * arguments parameter of a {@link Payment_PayPal_SOAP_Client::call()} method
+ * arguments parameter of a {@link Payment_PayPal_SOAP::call()} method
  * call
  *
  * @category  Payment

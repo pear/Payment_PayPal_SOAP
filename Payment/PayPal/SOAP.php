@@ -138,8 +138,8 @@ abstract class Payment_PayPal_SOAP
      * Mode to use for PayPal API
      *
      * Valid modes are:
-     * - sandbox: for development and testing.
-     * - live:    for processing live payments.
+     * - <kbd>sandbox</kbd> - for development and testing.
+     * - <kbd>live</kbd>    - for processing live payments.
      *
      * Defaults to 'sandbox'.
      *
@@ -229,21 +229,21 @@ abstract class Payment_PayPal_SOAP
      *
      * The available options are:
      *
-     * - <code>mode</code>         - optional. The mode to use for PayPal API
-     *                               calls. Valid modes are <code>sandbox</code>
-     *                               for development and testing, and
-     *                               <code>live</code> for live payments. If not
-     *                               specified, <em><code>sandbox</code></em> is
-     *                               used.
-     * - <code>username</code>     - the username used for authentication.
-     * - <code>password</code>     - the password used for authentication.
-     * - <code>signature</code>    - optional. The signature used for signature-
-     *                               based authentication. Not required if
-     *                               certificate-based authentication is used.
-     * - <code>certificate</code>  - optional. The local certificate filename
-     *                               used for certificate-based authentication.
-     *                               Not required if signature-based
-     *                               authentication is used.
+     * - <kbd>mode</code>       - optional. The mode to use for PayPal API
+     *                            calls. Valid modes are <kbd>sandbox</kbd>
+     *                            for development and testing, and
+     *                            <kbd>live</kbd> for live payments. If not
+     *                            specified, <em><kbd>sandbox</kbd></em> is
+     *                            used.
+     * - <kbd>username</kbd>    - the username used for authentication.
+     * - <kbd>password</kbd>    - the password used for authentication.
+     * - <kbd>signature</kbd>   - optional. The signature used for signature-
+     *                            based authentication. Not required if
+     *                            certificate-based authentication is used.
+     * - <kbd>certificate</kbd> - optional. The local certificate filename used
+     *                            for certificate-based authentication. Not
+     *                            required if signature-based authentication is
+     *                            used.
      *
      * @param array $options array of options.
      *
@@ -351,9 +351,8 @@ abstract class Payment_PayPal_SOAP
      *
      * @throws Payment_PayPal_SOAP_ErrorException if a SOAP response contains
      *         one or more Error elements. A detailed error message will be
-     *         present in the exception message and the severity code will be
-     *         in the exception code. See the {@link Payment_PayPal_SOAP} class
-     *         for severity code constants.
+     *         present in the exception message and the PayPal error code will
+     *         be in the exception code.
      *
      * @throws Payment_PayPal_SOAP_FaultException if a SOAP initialization
      *         error occurs or an unknown SOAP error occurs.
@@ -634,8 +633,9 @@ abstract class Payment_PayPal_SOAP
      * Sets the mode to use for API calls
      *
      * @param string $mode the mode to use for PayPal API calls. Valid modes
-     *                     are <code>sandbox</code> for development and
-     *                     testing, and <code>live</code> for live payments.
+     *                     are:
+     *                     - <kbd>sandbox</kbd> - for development and testing
+     *                     - <kbd>live</kbd>    - for live payments.
      *
      * @return void
      *
