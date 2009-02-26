@@ -36,7 +36,7 @@
  * @category  Payment
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
- * @copyright 2008 silverorange
+ * @copyright 2008-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @version   CVS: $Id$
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
@@ -50,7 +50,7 @@ require_once 'PHPUnit/Framework.php';
 /**
  * The class to test
  */
-require_once 'Payment/PayPal/SOAP/Client.php';
+require_once 'Payment/PayPal/SOAP.php';
 
 /**
  * Base class for testing Payment_PayPal_SOAP.
@@ -58,7 +58,7 @@ require_once 'Payment/PayPal/SOAP/Client.php';
  * @category  Payment
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
- * @copyright 2008 silverorange
+ * @copyright 2008-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
@@ -67,7 +67,7 @@ abstract class Payment_PayPal_SOAP_TestCase extends PHPUnit_Framework_TestCase
     // {{{ protected properties
 
     /**
-     * @var Payment_PayPal_SOAP_Client
+     * @var Payment_PayPal_SOAP
      */
     protected $client = null;
 
@@ -102,7 +102,7 @@ abstract class Payment_PayPal_SOAP_TestCase extends PHPUnit_Framework_TestCase
         }
 
         $this->config = $GLOBALS['Payment_PayPal_SOAP_Unittest_Config'];
-        $this->client = new Payment_PayPal_SOAP_Client($this->config);
+        $this->client = new Payment_PayPal_SOAP($this->config);
     }
 
     // }}}

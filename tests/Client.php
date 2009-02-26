@@ -10,7 +10,7 @@ require_once 'TestCase.php';
  * @category  Payment
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
- * @copyright 2008 silverorange
+ * @copyright 2008-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @version   CVS: $Id$
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
@@ -29,7 +29,7 @@ class Client extends Payment_PayPal_SOAP_TestCase
 			'signature' => 'bar'
 		);
 
-		$client = new Payment_PayPal_SOAP_Client($options);
+		$client = new Payment_PayPal_SOAP($options);
     }
 
     // }}}
@@ -45,7 +45,7 @@ class Client extends Payment_PayPal_SOAP_TestCase
 			'signature' => 'bar'
 		);
 
-		$client = new Payment_PayPal_SOAP_Client($options);
+		$client = new Payment_PayPal_SOAP($options);
     }
 
     // }}}
@@ -61,7 +61,7 @@ class Client extends Payment_PayPal_SOAP_TestCase
 			'password' => 'bar'
 		);
 
-		$client = new Payment_PayPal_SOAP_Client($options);
+		$client = new Payment_PayPal_SOAP($options);
     }
 
     // }}}
@@ -79,7 +79,7 @@ class Client extends Payment_PayPal_SOAP_TestCase
             'mode'      => 'test'
 		);
 
-		$client = new Payment_PayPal_SOAP_Client($options);
+		$client = new Payment_PayPal_SOAP($options);
     }
 
     // }}}
