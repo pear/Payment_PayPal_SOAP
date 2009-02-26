@@ -34,7 +34,10 @@
 require_once 'PEAR/PackageFileManager2.php';
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-$release_version = '0.1.0';
+$api_version     = '0.2.0';
+$api_state       = 'alpha';
+
+$release_version = '0.2.0';
 $release_state   = 'alpha';
 $release_notes   = 'First PEAR release.';
 
@@ -46,16 +49,23 @@ $description =
 
 $package = new PEAR_PackageFileManager2();
 
-$package->setOptions(array(
-    'filelistgenerator' => 'cvs',
-    'simpleoutput'      => true,
-    'baseinstalldir'    => '/Payment',
-    'packagedirectory'  => './',
-    'dir_roles'         => array(
-        'PayPal' => 'php',
-        'tests'  => 'test'
+$package->setOptions(
+    array(
+        'filelistgenerator'       => 'cvs',
+        'simpleoutput'            => true,
+        'baseinstalldir'          => '/',
+        'packagedirectory'        => './',
+        'dir_roles'               => array(
+            'Payment'             => 'php',
+            'Payment/PayPal'      => 'php',
+            'Payment/PayPal/SOAP' => 'php',
+            'tests'               => 'test'
+        ),
+        'ignore'                  => array(
+            'package.php'
+        )
     )
-));
+);
 
 $package->setPackage('Payment_PayPal_SOAP');
 $package->setSummary('PayPal SOAP API client');
@@ -67,15 +77,15 @@ $package->setLicense('LGPL', 'http://www.gnu.org/copyleft/lesser.html');
 $package->setNotes($release_notes);
 $package->setReleaseVersion($release_version);
 $package->setReleaseStability($release_state);
-$package->setAPIVersion('0.0.1');
-$package->setAPIStability('alpha');
+$package->setAPIVersion($api_version);
+$package->setAPIStability($api_state);
 
-$package->addIgnore('package.php');
-$package->addIgnore('package-2.0.xml');
-$package->addIgnore('*.tgz');
-
-$package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier',
-    'mike@silverorange.com');
+$package->addMaintainer(
+    'lead',
+    'gauthierm',
+    'Mike Gauthier',
+    'mike@silverorange.com'
+);
 
 $package->setPhpDep('5.1.0', false,
     array('5.2.2', '5.2.3', '5.2.4', '5.2.5', '5.2.6'));
