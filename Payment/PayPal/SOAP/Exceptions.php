@@ -273,20 +273,31 @@ class Payment_PayPal_SOAP_FaultException extends
      */
     private $_soapFault = null;
 
+    /**
+     * The SOAP client that caused the exception
+     *
+     * @var SoapClient
+     * @see Payment_PayPal_SOAP_FaultException::getSoapClient()
+     */
+    private $_soapClient = null;
+
     // }}}
     // {{{ public function __construct()
 
     /**
      * Creates a new PayPal SOAP fault exception
      *
-     * @param string    $message   the exception message.
-     * @param integer   $code      the exception code.
-     * @param SoapFault $soapFault the original SoapFault.
+     * @param string     $message    the exception message.
+     * @param integer    $code       the exception code.
+     * @param SoapFault  $soapFault  the original SoapFault.
+     * @param SoapClient $soapClient the SOAP client that caused the fault.
      */
-    public function __construct($message, $code, SoapFault $soapFault)
+    public function __construct($message, $code, SoapFault $soapFault,
+        SoapClient $soapClient)
     {
         parent::__construct($message, $code);
-        $this->_soapFault = $soapFault;
+        $this->_soapFault  = $soapFault;
+        $this->_soapClient = $soapClient;
     }
 
     // }}}
@@ -301,6 +312,19 @@ class Payment_PayPal_SOAP_FaultException extends
     public function getSoapFault()
     {
         return $this->_soapFault;
+    }
+
+    // }}}
+    // {{{ getSoapClient()
+
+    /**
+     * Gets the original SOAP client that caused the exception
+     *
+     * @return SoapClient the SOAP client that caused the exception.
+     */
+    public function getSoapClient()
+    {
+        return $this->_soapClient;
     }
 
     // }}}

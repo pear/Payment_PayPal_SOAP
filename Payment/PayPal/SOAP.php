@@ -359,14 +359,20 @@ class Payment_PayPal_SOAP
      */
     public function call($requestName, $arguments = array())
     {
-        try {
-            $client = $this->getSoapClient();
+        $client = $this->getSoapClient();
 
+        // Use a unique client. If an exception is thrown, state will be
+        // preserved if subsequent requests are made.
+        $client = clone $client;
+
+        $headers = $this->getSoapHeaders();
+
+        try {
             $response = $client->__soapCall(
                 $requestName,
                 array($arguments),
                 null,
-                $this->getSoapHeader()
+                $headers
             );
 
             if (isset($response->Errors)) {
@@ -409,8 +415,6 @@ class Payment_PayPal_SOAP
                     );
                 }
             }
-
-            return $response;
         } catch (SoapFault $e) {
             $message = $e->getMessage();
 
@@ -439,8 +443,10 @@ class Payment_PayPal_SOAP
 
             // Unknown SOAP exception, pass it along.
             throw new Payment_PayPal_SOAP_FaultException('PayPal SOAP Error: ' .
-                $e->getMessage(), $e->getCode(), $e);
+                $e->getMessage(), $e->getCode(), $e, $client);
         }
+
+        return $response;
     }
 
     // }}}
