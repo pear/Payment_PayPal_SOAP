@@ -18,9 +18,9 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
   <active>yes</active>
  </lead>
  <date>2009-02-27</date>
- <time>13:13:13</time>
+ <time>13:26:43</time>
  <version>
-  <release>0.2.0</release>
+  <release>0.2.1</release>
   <api>0.2.0</api>
  </version>
  <stability>
@@ -28,11 +28,7 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
   <api>alpha</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
- <notes>Second PEAR release. Changes include:
-
- * cleaned up exceptions
- * merge Client class into SOAP class
- * API documentation and coding-standards cleanups
+ <notes>Bug fix release. Fixes typo in method name and the getLastRequest() / getLastResponse() methods.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -76,7 +72,7 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
  <changelog>
   <release>
    <version>
-    <release>0.2.0</release>
+    <release>0.2.1</release>
     <api>0.2.0</api>
    </version>
    <stability>
@@ -85,11 +81,7 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
    </stability>
    <date>2009-02-27</date>
    <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
-   <notes>Second PEAR release. Changes include:
-
- * cleaned up exceptions
- * merge Client class into SOAP class
- * API documentation and coding-standards cleanups
+   <notes>Bug fix release. Fixes typo in method name and the getLastRequest() / getLastResponse() methods.
    </notes>
   </release>
  </changelog>

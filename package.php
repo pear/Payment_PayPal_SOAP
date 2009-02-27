@@ -43,12 +43,10 @@ PEAR::setErrorHandling(PEAR_ERROR_DIE);
 $api_version     = '0.2.0';
 $api_state       = 'alpha';
 
-$release_version = '0.2.0';
+$release_version = '0.2.1';
 $release_state   = 'alpha';
-$release_notes   = "Second PEAR release. Changes include:\n\n" .
-    " * cleaned up exceptions\n" .
-    " * merge Client class into SOAP class\n" .
-    " * API documentation and coding-standards cleanups\n";
+$release_notes   = "Bug fix release. Fixes typo in method name and the " .
+    "getLastRequest() / getLastResponse() methods.\n";
 
 $description =
     "This package provides an easy-to-use wrapper of PHP 5's SOAP client " .
