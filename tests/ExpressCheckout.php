@@ -92,6 +92,8 @@ class ExpressCheckout extends Payment_PayPal_SOAP_TestCase
 
     public function testDoExpressCheckoutPayment()
     {
+        $caughtException = false;
+
         // a token from set express checkout is required first
         $result = $this->client->call('SetExpressCheckout', array(
             'SetExpressCheckoutRequest' => array(
@@ -113,68 +115,79 @@ class ExpressCheckout extends Payment_PayPal_SOAP_TestCase
 
         $token = $result->Token;
 
-        // do payment request
-        $result = $this->client->call('DoExpressCheckoutPayment', array(
-            'DoExpressCheckoutPaymentRequest' => array(
-                'Version' => '1.0',
-                'DoExpressCheckoutPaymentRequestDetails' => array(
-                    'Token' => $token,
-                    'PaymentAction' => 'Sale',
-                    // We can't have a real payer for automated unit tests
-                    // since it would reuqire interacting with a webpage.
-                    'PayerID' => 'bad-payer-id',
-                    'PaymentDetails' => array(
-                        'OrderTotal' => array(
-                            '_' => '38.07',
-                            'currencyID' => 'USD'
-                        ),
-                        'ItemTotal' => array(
-                            '_' => '34.27',
-                            'currencyID' => 'USD'
-                        ),
-                        'TaxTotal' => array(
-                            '_' => '3.8',
-                            'currencyID' => 'USD'
-                        ),
-                        'PaymentDetailsItem' => array(
-                            array(
-                                'Name' => 'Cool Tapes',
-                                'Amount' => array(
-                                    '_' => '10.95',
-                                    'currencyID' => 'USD'
-                                ),
-                                'Number' => 'SKU-0001',
-                                'Quantity' => '2',
-                                'Tax' => '1.24'
+        try {
+
+            // do payment request
+            $result = $this->client->call('DoExpressCheckoutPayment', array(
+                'DoExpressCheckoutPaymentRequest' => array(
+                    'Version' => '1.0',
+                    'DoExpressCheckoutPaymentRequestDetails' => array(
+                        'Token' => $token,
+                        'PaymentAction' => 'Sale',
+                        // We can't have a real payer for automated unit tests
+                        // since it would reuqire interacting with a webpage.
+                        'PayerID' => 'bad-payer-id',
+                        'PaymentDetails' => array(
+                            'OrderTotal' => array(
+                                '_' => '38.07',
+                                'currencyID' => 'USD'
                             ),
-                            array(
-                                'Name' => 'Strong Bad Sings',
-                                'Amount' => array(
-                                    '_' => '12.37',
-                                    'currencyID' => 'USD'
+                            'ItemTotal' => array(
+                                '_' => '34.27',
+                                'currencyID' => 'USD'
+                            ),
+                            'TaxTotal' => array(
+                                '_' => '3.8',
+                                'currencyID' => 'USD'
+                            ),
+                            'PaymentDetailsItem' => array(
+                                array(
+                                    'Name' => 'Cool Tapes',
+                                    'Amount' => array(
+                                        '_' => '10.95',
+                                        'currencyID' => 'USD'
+                                    ),
+                                    'Number' => 'SKU-0001',
+                                    'Quantity' => '2',
+                                    'Tax' => '1.24'
                                 ),
-                                'Number' => 'SKU-0002',
-                                'Quantity' => '1',
-                                'Tax' => '1.32'
+                                array(
+                                    'Name' => 'Strong Bad Sings',
+                                    'Amount' => array(
+                                        '_' => '12.37',
+                                        'currencyID' => 'USD'
+                                    ),
+                                    'Number' => 'SKU-0002',
+                                    'Quantity' => '1',
+                                    'Tax' => '1.32'
+                                )
                             )
                         )
                     )
                 )
-            )
-        ));
+            ));
+        } catch (Payment_PayPal_SOAP_ErrorException $e) {
+            // we expect an error because the payer has not confirmed the
+            // transaction
+            $caughtException = true;
 
-        $this->assertType('stdClass', $result);
+            $message = 'Error present in PayPal SOAP response: The customer ' .
+                'has not yet confirmed payment for this Express Checkout ' .
+                'session.';
 
-        // we expect errors because the payer has not confirmed the transaction
-        $expectedError = 'The customer has not yet confirmed payment for ' .
-            'this Express Checkout session.';
+            $this->assertEquals($message, $e->getMessage());
+            $this->assertEquals(10435, $e->getCode());
 
-        $this->assertObjectHasAttribute('Errors', $result);
-        $this->assertObjectHasAttribute('LongMessage', $result->Errors);
-        $this->assertEquals($expectedError, $result->Errors->LongMessage);
+            $response = $e->getResponse();
+            $this->assertObjectHasAttribute(
+                'DoExpressCheckoutPaymentResponseDetails', $response);
+        }
 
-        $this->assertObjectHasAttribute(
-            'DoExpressCheckoutPaymentResponseDetails', $result);
+        $this->assertTrue(
+            $caughtException,
+            'Expected error exception was not thrown by the ' .
+            'DoExpressCheckout call.'
+        );
     }
 
     // }}}
