@@ -106,7 +106,7 @@ class Payment_PayPal_SOAP
      *
      * @var SoapHeader
      *
-     * @see Payment_PayPal_SOAP::getSoapHeader()
+     * @see Payment_PayPal_SOAP::getSoapHeaders()
      */
     protected $soapHeader = null;
 
@@ -507,10 +507,10 @@ class Payment_PayPal_SOAP
     }
 
     // }}}
-    // {{{ getSoapHeader()
+    // {{{ getSoapHeaders()
 
     /**
-     * Gets the SOAP header required for PayPal authentication
+     * Gets the SOAP headers required for PayPal authentication
      *
      * If the header doesn't exist, it is created and stored in the protected
      * property {@link PaymentPayPal_SOAP::$soapHeader}.
@@ -524,7 +524,7 @@ class Payment_PayPal_SOAP
      * @see Payment_PayPal_SOAP::setPassword()
      * @see Payment_PayPal_SOAP::setSignature()
      */
-    protected function getSoapHeader()
+    protected function getSoapHeaders()
     {
         if ($this->soapHeader === null) {
             $credentials = array(
