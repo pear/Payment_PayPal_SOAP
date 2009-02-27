@@ -50,7 +50,7 @@ class Debug extends Payment_PayPal_SOAP_TestCase
         $this->_assertElementCountEquals(1, '/soap:Envelope/soap:Header/' .
             'pp:RequesterCredentials/ebl:Credentials/ebl:Password');
 
-        // body 
+        // body
         $this->_assertElementCountEquals(1, '/soap:Envelope/soap:Body');
         $this->_assertElementCountEquals(1, '/soap:Envelope/soap:Body/' .
             'pp:SetExpressCheckoutReq');
@@ -121,7 +121,7 @@ class Debug extends Payment_PayPal_SOAP_TestCase
     }
 
     // }}}
-    // {{{ _doRequest ()
+    // {{{ _doRequest()
 
     private function _doRequest()
     {
