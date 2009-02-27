@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.6.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+<package packagerversion="1.7.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
     http://pear.php.net/dtd/tasks-1.0.xsd
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
@@ -8,34 +8,42 @@
  <summary>PayPal SOAP API client</summary>
  <description>This package provides an easy-to-use wrapper of PHP 5&apos;s SOAP client for use with the PayPal SOAP API.
 
-This package requires PHP 5.1.0 or greater, built with the SOAP extension enabled.</description>
+This package requires PHP 5.1.0 or greater, built with the SOAP extension enabled.
+
+Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this package.</description>
  <lead>
   <name>Mike Gauthier</name>
   <user>gauthierm</user>
   <email>mike@silverorange.com</email>
   <active>yes</active>
  </lead>
- <date>2008-08-28</date>
- <time>18:45:30</time>
+ <date>2009-02-27</date>
+ <time>13:13:13</time>
  <version>
-  <release>0.1.0</release>
-  <api>0.0.1</api>
+  <release>0.2.0</release>
+  <api>0.2.0</api>
  </version>
  <stability>
   <release>alpha</release>
   <api>alpha</api>
  </stability>
- <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
- <notes>First PEAR release.</notes>
+ <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+ <notes>Second PEAR release. Changes include:
+
+ * cleaned up exceptions
+ * merge Client class into SOAP class
+ * API documentation and coding-standards cleanups
+ </notes>
  <contents>
-  <dir baseinstalldir="/Payment" name="/">
-   <dir name="PayPal">
-    <dir name="SOAP">
-     <file name="Client.php" role="php" />
-     <file name="Exceptions.php" role="php" />
-    </dir> <!-- /PayPal/SOAP -->
-    <file name="SOAP.php" role="php" />
-   </dir> <!-- /PayPal -->
+  <dir baseinstalldir="/" name="/">
+   <dir name="Payment">
+    <dir name="PayPal">
+     <dir name="SOAP">
+      <file name="Exceptions.php" role="php" />
+     </dir> <!-- /Payment/PayPal/SOAP -->
+     <file name="SOAP.php" role="php" />
+    </dir> <!-- /Payment/PayPal -->
+   </dir> <!-- /Payment -->
    <dir name="tests">
     <file name="AllTests.php" role="test" />
     <file name="Client.php" role="test" />
@@ -68,16 +76,21 @@ This package requires PHP 5.1.0 or greater, built with the SOAP extension enable
  <changelog>
   <release>
    <version>
-    <release>0.1.0</release>
-    <api>0.0.1</api>
+    <release>0.2.0</release>
+    <api>0.2.0</api>
    </version>
    <stability>
     <release>alpha</release>
     <api>alpha</api>
    </stability>
-   <date>2008-08-28</date>
-   <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
-   <notes>First PEAR release.</notes>
+   <date>2009-02-27</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>Second PEAR release. Changes include:
+
+ * cleaned up exceptions
+ * merge Client class into SOAP class
+ * API documentation and coding-standards cleanups
+   </notes>
   </release>
  </changelog>
 </package>

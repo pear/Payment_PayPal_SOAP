@@ -45,13 +45,18 @@ $api_state       = 'alpha';
 
 $release_version = '0.2.0';
 $release_state   = 'alpha';
-$release_notes   = 'First PEAR release.';
+$release_notes   = "Second PEAR release. Changes include:\n\n" .
+    " * cleaned up exceptions\n" .
+    " * merge Client class into SOAP class\n" .
+    " * API documentation and coding-standards cleanups\n";
 
 $description =
     "This package provides an easy-to-use wrapper of PHP 5's SOAP client " .
     "for use with the PayPal SOAP API.\n\n" .
     "This package requires PHP 5.1.0 or greater, built with the SOAP " .
-    "extension enabled.";
+    "extension enabled.\n\n" .
+    "Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible " .
+    "with this package.";
 
 $package = new PEAR_PackageFileManager2();
 
