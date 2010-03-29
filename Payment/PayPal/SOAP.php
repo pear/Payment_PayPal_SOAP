@@ -64,7 +64,7 @@ require_once 'Payment/PayPal/SOAP/Exceptions.php';
  * @category  Payment
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
- * @copyright 2008-2009 silverorange
+ * @copyright 2008-2010 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
@@ -184,6 +184,20 @@ class Payment_PayPal_SOAP
     private $_signature = '';
 
     /**
+     * PayPal subject used for making requests on behalf of a third-party
+     *
+     * This is the email address of the third-party the request should be made
+     * on behalf of. Your API username may require explicit access from the
+     * third-party before certain API actions will work.
+     *
+     * @var string
+     *
+     * @see Payment_PayPal_SOAP::__construct()
+     * @see Payment_PayPal_SOAP::setSubject()
+     */
+    private $_subject = '';
+
+    /**
      * WSDL files for the PayPal SOAP API indexed by mode
      *
      * @var array
@@ -237,6 +251,8 @@ class Payment_PayPal_SOAP
      *                            used.
      * - <kbd>username</kbd>    - the username used for authentication.
      * - <kbd>password</kbd>    - the password used for authentication.
+     * - <kbd>subject</kbd>     - optional. The third-party on whose behalf
+     *                            requests are to be made.
      * - <kbd>signature</kbd>   - optional. The signature used for signature-
      *                            based authentication. Not required if
      *                            certificate-based authentication is used.
@@ -269,6 +285,10 @@ class Payment_PayPal_SOAP
 
             case 'password':
                 $this->setPassword($value);
+                break;
+
+            case 'subject':
+                $this->setSubject($value);
                 break;
 
             case 'signature':
@@ -490,23 +510,6 @@ class Payment_PayPal_SOAP
     }
 
     // }}}
-    // {{{ setSoapClient()
-
-    /**
-     * Sets a SOAP client to use for SOAP requests
-     *
-     * This is useful for testing.
-     *
-     * @param SoapClient $client the SOAP client to use.
-     *
-     * @return void
-     */
-    public function setSoapClient(SoapClient $client)
-    {
-        $this->soapClient = $client;
-    }
-
-    // }}}
     // {{{ getSoapHeaders()
 
     /**
@@ -522,6 +525,7 @@ class Payment_PayPal_SOAP
      * @see Payment_PayPal_SOAP::call()
      * @see Payment_PayPal_SOAP::setUsername()
      * @see Payment_PayPal_SOAP::setPassword()
+     * @see Payment_PayPal_SOAP::setSubject()
      * @see Payment_PayPal_SOAP::setSignature()
      */
     protected function getSoapHeaders()
@@ -533,6 +537,10 @@ class Payment_PayPal_SOAP
                     'Password'  => $this->_password
                 )
             );
+
+            if ($this->_subject) {
+                $credentials['Credentials']['Subject'] = $this->_subject;
+            }
 
             if ($this->_signature) {
                 $credentials['Credentials']['Signature'] = $this->_signature;
@@ -572,6 +580,24 @@ class Payment_PayPal_SOAP
     }
 
     // }}}
+    // {{{ setSoapClient()
+
+    /**
+     * Sets a SOAP client to use for SOAP requests
+     *
+     * This is useful for testing.
+     *
+     * @param SoapClient $client the SOAP client to use.
+     *
+     * @return Payment_PayPal_SOAP the current object, for fluent interface.
+     */
+    public function setSoapClient(SoapClient $client)
+    {
+        $this->soapClient = $client;
+        return $this;
+    }
+
+    // }}}
     // {{{ setUsername()
 
     /**
@@ -579,7 +605,7 @@ class Payment_PayPal_SOAP
      *
      * @param string $username the API username used for authentication.
      *
-     * @return void
+     * @return Payment_PayPal_SOAP the current object, for fluent interface.
      *
      * @see Payment_PayPal_SOAP::__construct()
      * @see Payment_PayPal_SOAP::$_username
@@ -587,6 +613,7 @@ class Payment_PayPal_SOAP
     protected function setUsername($username)
     {
         $this->_username = strval($username);
+        return $this;
     }
 
     // }}}
@@ -597,7 +624,7 @@ class Payment_PayPal_SOAP
      *
      * @param string $password the API password used for authentication.
      *
-     * @return void
+     * @return Payment_PayPal_SOAP the current object, for fluent interface.
      *
      * @see Payment_PayPal_SOAP::__construct()
      * @see Payment_PayPal_SOAP::$_password
@@ -605,6 +632,7 @@ class Payment_PayPal_SOAP
     protected function setPassword($password)
     {
         $this->_password = strval($password);
+        return $this;
     }
 
     // }}}
@@ -616,7 +644,7 @@ class Payment_PayPal_SOAP
      * @param string $signature the API signature used for signature-based
      *                          authentication.
      *
-     * @return void
+     * @return Payment_PayPal_SOAP the current object, for fluent interface.
      *
      * @see Payment_PayPal_SOAP::__construct()
      * @see Payment_PayPal_SOAP::$_signature
@@ -624,6 +652,34 @@ class Payment_PayPal_SOAP
     protected function setSignature($signature)
     {
         $this->_signature = strval($signature);
+        return $this;
+    }
+
+    // }}}
+    // {{{ setSubject()
+
+    /**
+     * Sets the subject used for making requests on behalf of a third-party
+     *
+     * For example, you may be running a marketplace where customers will
+     * purchase goods directlry from your clients through your market. In this
+     * case, you can use the client's PayPal email address as the subject to
+     * initiate a checkout for the customer in your marketplace.
+     *
+     * @param string $subject the email address of the third-party. Your API
+     *                        username may require explicit access be granted
+     *                        from the third-party before certain API actions
+     *                        will work.
+     *
+     * @return Payment_PayPal_SOAP the current object, for fluent interface.
+     *
+     * @see Payment_PayPal_SOAP::__construct()
+     * @see Payment_PayPal_SOAP::$_subject
+     */
+    protected function setSubject($subject)
+    {
+        $this->_subject = strval($subject);
+        return $this;
     }
 
     // }}}
@@ -639,7 +695,7 @@ class Payment_PayPal_SOAP
      * @param string $certificateFile the local certificate file used for
      *                                certificate-based authentication.
      *
-     * @return void
+     * @return Payment_PayPal_SOAP the current object, for fluent interface.
      *
      * @see Payment_PayPal_SOAP::__construct()
      * @see Payment_PayPal_SOAP::$soapOptions
@@ -650,6 +706,7 @@ class Payment_PayPal_SOAP
         if ($certificateFile) {
             $this->soapOptions['local_cert'] = $certificateFile;
         }
+        return $this;
     }
 
     // }}}
@@ -663,7 +720,7 @@ class Payment_PayPal_SOAP
      *                     - <kbd>sandbox</kbd> - for development and testing
      *                     - <kbd>live</kbd>    - for live payments.
      *
-     * @return void
+     * @return Payment_PayPal_SOAP the current object, for fluent interface.
      *
      * @throws Payment_PayPal_SOAP_InvalidModeException if an invalid mode is
      *         specified.
@@ -682,6 +739,8 @@ class Payment_PayPal_SOAP
         }
 
         $this->_mode = $mode;
+
+        return $this;
     }
 
     // }}}
