@@ -9,7 +9,7 @@
  *
  * LICENSE:
  *
- * Copyright (c) 2008-2009 silverorange
+ * Copyright (c) 2008-2010 silverorange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,13 +40,15 @@
 require_once 'PEAR/PackageFileManager2.php';
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-$api_version     = '0.2.0';
-$api_state       = 'alpha';
+$api_version     = '0.3.0';
+$api_state       = 'beta';
 
-$release_version = '0.2.1';
-$release_state   = 'alpha';
-$release_notes   = "Bug fix release. Fixes typo in method name and the " .
-    "getLastRequest() / getLastResponse() methods.\n";
+$release_version = '0.3.0';
+$release_state   = 'beta';
+$release_notes   =
+    " * Add support for 'subject' field in SOAP headers to make requests " .
+    "   on behalf of third parties.\n" .
+    " * Add fluent-interface to setter methods.\n";
 
 $description =
     "This package provides an easy-to-use wrapper of PHP 5's SOAP client " .
