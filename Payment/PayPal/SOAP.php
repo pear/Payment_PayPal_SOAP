@@ -427,8 +427,21 @@ class Payment_PayPal_SOAP
                         $response
                     );
                 } else {
+                    $message = sprintf(
+                        "Error present in PayPal SOAP response: %s\n" .
+                        "Code: %s\n" .
+                        "Username: %s\n",
+                        $message,
+                        intval($error->ErrorCode),
+                        $this->_username
+                    );
+
+                    if ($this->_subject) {
+                        $message .= sprintf("Subject: %s\n", $this->_subject);
+                    }
+
                     throw new Payment_PayPal_SOAP_ErrorException(
-                        'Error present in PayPal SOAP response: ' . $message,
+                        $message,
                         intval($error->ErrorCode),
                         $severity,
                         $response
