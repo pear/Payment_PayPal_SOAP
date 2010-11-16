@@ -243,7 +243,7 @@ class Payment_PayPal_SOAP
      *
      * The available options are:
      *
-     * - <kbd>mode</code>       - optional. The mode to use for PayPal API
+     * - <kbd>mode</kbd>        - optional. The mode to use for PayPal API
      *                            calls. Valid modes are <kbd>sandbox</kbd>
      *                            for development and testing, and
      *                            <kbd>live</kbd> for live payments. If not
