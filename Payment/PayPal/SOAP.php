@@ -16,7 +16,7 @@
  *
  * LICENSE:
  *
- * Copyright (c) 2008-2009 silverorange
+ * Copyright (c) 2008-2011 silverorange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,7 @@ require_once 'Payment/PayPal/SOAP/Exceptions.php';
  * @category  Payment
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
- * @copyright 2008-2010 silverorange
+ * @copyright 2008-2011 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
@@ -130,6 +130,20 @@ class Payment_PayPal_SOAP
         'trace'        => true,
         'soap_version' => SOAP_1_1
     );
+
+    /**
+     * Whether or not to use a local copy of the PayPal WSDL
+     *
+     * If true, a local copy of the PayPal WSDL is used instead of the copy
+     * hosted on PayPal's servers. This can be used if PayPal breaks the hosted
+     * WSDL files, as has happened in the past.
+     *
+     * @var boolean
+     *
+     * @see Payment_PayPal_SOAP::__construct()
+     * @see Payment_PayPal_SOAP::getWsdlFile()
+     */
+    protected $useLocalWsdl = false;
 
     // }}}
     // {{{ private properties
@@ -198,16 +212,6 @@ class Payment_PayPal_SOAP
     private $_subject = '';
 
     /**
-     * WSDL files for the PayPal SOAP API indexed by mode
-     *
-     * @var array
-     */
-    static private $_wsdlFiles = array(
-        'sandbox' => 'https://www.sandbox.paypal.com/wsdl/PayPalSvc.wsdl',
-        'live'    => 'https://www.paypal.com/wsdl/PayPalSvc.wsdl'
-    );
-
-    /**
      * API endpoints indexed by mode and security mode
      *
      * Certificate-based authentication uses a different API endpoint than
@@ -243,23 +247,28 @@ class Payment_PayPal_SOAP
      *
      * The available options are:
      *
-     * - <kbd>mode</kbd>        - optional. The mode to use for PayPal API
-     *                            calls. Valid modes are <kbd>sandbox</kbd>
-     *                            for development and testing, and
-     *                            <kbd>live</kbd> for live payments. If not
-     *                            specified, <em><kbd>sandbox</kbd></em> is
-     *                            used.
-     * - <kbd>username</kbd>    - the username used for authentication.
-     * - <kbd>password</kbd>    - the password used for authentication.
-     * - <kbd>subject</kbd>     - optional. The third-party on whose behalf
-     *                            requests are to be made.
-     * - <kbd>signature</kbd>   - optional. The signature used for signature-
-     *                            based authentication. Not required if
-     *                            certificate-based authentication is used.
-     * - <kbd>certificate</kbd> - optional. The local certificate filename used
-     *                            for certificate-based authentication. Not
-     *                            required if signature-based authentication is
-     *                            used.
+     * - <kbd>mode</kbd>         - optional. The mode to use for PayPal API
+     *                             calls. Valid modes are <kbd>sandbox</kbd>
+     *                             for development and testing, and
+     *                             <kbd>live</kbd> for live payments. If not
+     *                             specified, <em><kbd>sandbox</kbd></em> is
+     *                             used.
+     * - <kbd>username</kbd>     - the username used for authentication.
+     * - <kbd>password</kbd>     - the password used for authentication.
+     * - <kbd>subject</kbd>      - optional. The third-party on whose behalf
+     *                             requests are to be made.
+     * - <kbd>signature</kbd>    - optional. The signature used for signature-
+     *                             based authentication. Not required if
+     *                             certificate-based authentication is used.
+     * - <kbd>certificate</kbd>  - optional. The local certificate filename used
+     *                             for certificate-based authentication. Not
+     *                             required if signature-based authentication is
+     *                             used.
+     * - <kbd>useLocalWsdl</kbd> - optional. When sepecified as true, a local
+     *                             copy of the PayPal WSDL is used instead of
+     *                             the copy hosted on PayPal's servers. This
+     *                             can be used if PayPal breaks the hosted
+     *                             WSDL files, as has happened in the past.
      *
      * @param array $options array of options.
      *
@@ -299,6 +308,10 @@ class Payment_PayPal_SOAP
             case 'certificate':
                 $hasCertificate = true;
                 $this->setCertificateFile($value);
+                break;
+
+            case 'useLocalWsdl':
+                $this->useLocalWsdl = ($value) ? true : false;
                 break;
             }
         }
@@ -584,7 +597,7 @@ class Payment_PayPal_SOAP
     {
         if (!($this->soapClient instanceof SoapClient)) {
             $this->soapClient = new SoapClient(
-                self::$_wsdlFiles[$this->_mode],
+                $this->getWsdlFile(),
                 $this->soapOptions
             );
         }
@@ -754,6 +767,46 @@ class Payment_PayPal_SOAP
         $this->_mode = $mode;
 
         return $this;
+    }
+
+    // }}}
+    // {{{ getWsdlFile()
+
+    /**
+     * Gets the WSDL file to use when building the SOAP object
+     *
+     * @return string the WSDL file to use when building the SOAP object.
+     */
+    protected function getWsdlFile()
+    {
+        if ($this->useLocalWsdl) {
+            $path = '@data-dir@/Payment_PayPal_SOAP/data/wsdl';
+            if (substr($path, 0, 1) === '@') {
+                $path = dirname(__FILE__) . '/../../data/wsdl';
+            }
+
+            switch ($this->_mode) {
+            case 'live':
+                $file = $path . '/live/PayPalSvc.wsdl';
+                break;
+            case 'sandbox':
+            default:
+                $file = $path . '/sandbox/PayPalSvc.wsdl';
+                break;
+            }
+        } else {
+            switch ($this->_mode) {
+            case 'live':
+                $file = 'https://www.paypal.com/wsdl/PayPalSvc.wsdl';
+                break;
+            case 'sandbox':
+            default:
+                $file = 'https://www.sandbox.paypal.com/wsdl/PayPalSvc.wsdl';
+                break;
+            }
+        }
+
+        return $file;
     }
 
     // }}}

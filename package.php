@@ -40,15 +40,14 @@
 require_once 'PEAR/PackageFileManager2.php';
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-$api_version     = '0.3.0';
+$api_version     = '0.4.0';
 $api_state       = 'beta';
 
-$release_version = '0.3.0';
+$release_version = '0.4.0';
 $release_state   = 'beta';
 $release_notes   =
-    " * Add support for 'subject' field in SOAP headers to make requests " .
-    "   on behalf of third parties.\n" .
-    " * Add fluent-interface to setter methods.\n";
+    " * Add 'useLocalWsdl' that can work around bad WSDL files hosted by " .
+    "PayPal\n";
 
 $description =
     "This package provides an easy-to-use wrapper of PHP 5's SOAP client " .
@@ -70,7 +69,8 @@ $package->setOptions(
             'Payment'             => 'php',
             'Payment/PayPal'      => 'php',
             'Payment/PayPal/SOAP' => 'php',
-            'tests'               => 'test'
+            'tests'               => 'test',
+            'data'                => 'data'
         ),
         'ignore'                  => array(
             'package.php'
@@ -93,6 +93,13 @@ $package->setReleaseVersion($release_version);
 $package->setReleaseStability($release_state);
 $package->setAPIVersion($api_version);
 $package->setAPIStability($api_state);
+
+$package->addReplacement(
+    'Payment/PayPal/SOAP.php',
+    'pear-config',
+    '@data-dir@',
+    'data_dir'
+);
 
 $package->addMaintainer(
     'lead',
