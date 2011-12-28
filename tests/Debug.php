@@ -2,7 +2,7 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-require_once 'TestCase.php';
+require_once dirname(__FILE__) . '/TestCase.php';
 
 /**
  * Tests getLastRequest() and getLastResponse() methods using

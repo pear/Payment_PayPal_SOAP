@@ -101,6 +101,13 @@ $package->addReplacement(
     'data_dir'
 );
 
+$package->addReplacement(
+    'tests/TestCase.php',
+    'pear-config',
+    '@php_dir@',
+    'php_dir'
+);
+
 $package->addMaintainer(
     'lead',
     'gauthierm',

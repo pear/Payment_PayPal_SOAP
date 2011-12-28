@@ -3,11 +3,11 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * PHPUnit 3.2 AllTests suite for the Payment_PayPal_SOAP package.
+ * PHPUnit AllTests suite for the Payment_PayPal_SOAP package.
  *
- * These tests require the PHPUnit 3.2 package to be installed. PHPUnit is
+ * These tests require the PHPUnit package to be installed. PHPUnit is
  * installable using PEAR. See the
- * {@link http://www.phpunit.de/pocket_guide/3.2/en/installation.html manual}
+ * {@link http://www.phpunit.de/manual/current/en/index.html manual}
  * for detailed installation instructions.
  *
  * This test suite follows the PEAR AllTests conventions as documented at
@@ -56,11 +56,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Payment_PayPal_SOAP_AllTests::main');
 }
 
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once 'ExpressCheckout.php';
-require_once 'Debug.php';
-require_once 'Client.php';
+require_once dirname(__FILE__) . '/ExpressCheckout.php';
+require_once dirname(__FILE__) . '/Debug.php';
+require_once dirname(__FILE__) . '/Client.php';
 
 /**
  * AllTests suite testing Payment_PayPal_SOAP

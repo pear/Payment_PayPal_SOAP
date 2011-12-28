@@ -3,11 +3,11 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * PHPUnit3.2 test framework script for the Payment_PayPal_SOAP package.
+ * PHPUnit test framework script for the Payment_PayPal_SOAP package.
  *
- * These tests require the PHPUnit 3.2 package to be installed. PHPUnit is
+ * These tests require the PHPUnit package to be installed. PHPUnit is
  * installable using PEAR. See the
- * {@link http://www.phpunit.de/pocket_guide/3.2/en/installation.html manual}
+ * {@link http://www.phpunit.de/manual/current/en/index.html manual}
  * for detailed installation instructions.
  *
  * Note:
@@ -48,10 +48,27 @@
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
 
-/**
- * PHPUnit3 framework
+/**#@+
+ * Get PHPUnit files
  */
-require_once 'PHPUnit/Framework.php';
+if ($fp = @fopen('PHPUnit/Autoload.php', 'r', true)) {
+    require_once 'PHPUnit/Autoload.php';
+} elseif ($fp = @fopen('PHPUnit/Framework.php', 'r', true)) {
+    require_once 'PHPUnit/Framework.php';
+    require_once 'PHPUnit/TextUI/TestRunner.php';
+} else {
+    die('skip could not find PHPUnit');
+}
+fclose($fp);
+/**#@- */
+
+if ('@php_dir@' == '@'.'php_dir'.'@') {
+    // This package hasn't been installed.
+    // Adjust path to ensure includes find files in working directory.
+    set_include_path(dirname(dirname(__FILE__))
+        . PATH_SEPARATOR . dirname(__FILE__)
+        . PATH_SEPARATOR . get_include_path());
+}
 
 /**
  * The class to test
