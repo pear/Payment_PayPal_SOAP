@@ -267,7 +267,7 @@ class Payment_PayPal_SOAP_Error
      */
     public function getType()
     {
-        return $this->severity;
+        return $this->type;
     }
 
     // }}}

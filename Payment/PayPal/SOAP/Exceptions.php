@@ -574,7 +574,7 @@ class Payment_PayPal_SOAP_ErrorException
      */
     public function getIterator()
     {
-        return $this->errors;
+        return new ArrayObject($this->errors);
     }
 
     // }}}
