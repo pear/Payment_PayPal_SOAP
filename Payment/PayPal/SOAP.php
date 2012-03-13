@@ -410,56 +410,81 @@ class Payment_PayPal_SOAP
 
             if (isset($response->Errors)) {
                 if (is_array($response->Errors)) {
-                    $error = reset($response->Errors);
+                    $errors = $response->Errors;
                 } else {
-                    $error = $response->Errors;
+                    $errors = array($response->Errors);
                 }
 
-                $message = (isset($error->LongMessage)) ?
-                    $error->LongMessage : $error->ShortMessage;
+                $errorObjects = array();
+                $messages     = array();
+                $codes        = array();
 
-                switch ($error->SeverityCode) {
-                case 'Warning':
-                    $severity = Payment_PayPal_SOAP::ERROR_WARNING;
-                    break;
-                case 'Error':
-                    $severity = Payment_PayPal_SOAP::ERROR_ERROR;
-                    break;
-                default:
-                    $severity = Payment_PayPal_SOAP::ERROR_UNKNOWN;
-                    break;
-                }
+                foreach ($errors as $error) {
 
-                $expiredTokenExp = '/Token value is no longer valid\.$/';
-                if (preg_match($expiredTokenExp, $message) === 1) {
-                    throw new Payment_PayPal_SOAP_ExpiredTokenException(
-                        'Expired token used for PayPal SOAP request: ' .
-                        $message,
-                        intval($error->ErrorCode),
-                        $severity,
-                        $response
-                    );
-                } else {
-                    $message = sprintf(
-                        "Error present in PayPal SOAP response: %s\n" .
-                        "Code: %s\n" .
-                        "Username: %s\n",
-                        $message,
-                        intval($error->ErrorCode),
-                        $this->_username
-                    );
+                    $message = (isset($error->LongMessage))
+                        ? $error->LongMessage
+                        : $error->ShortMessage;
 
-                    if ($this->_subject) {
-                        $message .= sprintf("Subject: %s\n", $this->_subject);
+                    $messages[] = $message;
+
+                    $code = intval($error->ErrorCode);
+                    $codes[] = $code;
+
+                    switch ($error->SeverityCode) {
+                    case 'Warning':
+                        $severity = Payment_PayPal_SOAP::ERROR_WARNING;
+                        break;
+                    case 'Error':
+                        $severity = Payment_PayPal_SOAP::ERROR_ERROR;
+                        break;
+                    default:
+                        $severity = Payment_PayPal_SOAP::ERROR_UNKNOWN;
+                        break;
                     }
 
-                    throw new Payment_PayPal_SOAP_ErrorException(
+                    $expiredTokenExp = '/Token value is no longer valid\.$/';
+                    if (preg_match($expiredTokenExp, $message) === 1) {
+                        $type = Payment_PayPal_SOAP_Error::TYPE_EXPIRED_TOKEN;
+                    } else {
+                        $type = Payment_PayPal_SOAP_Error::TYPE_DEFAULT;
+                    }
+
+                    $errorObjects[] = new Payment_PayPal_SOAP_Error(
                         $message,
-                        intval($error->ErrorCode),
+                        $code,
                         $severity,
-                        $response
+                        $type
+                    );
+
+                }
+
+                $exceptionMessage = sprintf(
+                    "Error(s) present in PayPal SOAP response: %s\n" .
+                    "Code(s): %s\n" .
+                    "Username: %s\n",
+                    implode(', ', $messages),
+                    implode(', ', $codes),
+                    $this->_username
+                );
+
+                if ($this->_subject) {
+                    $exceptionMessage .= sprintf(
+                        "Subject: %s\n",
+                        $this->_subject
                     );
                 }
+
+                $errorException = new Payment_PayPal_SOAP_ErrorException(
+                    $exceptionMessage,
+                    0,
+                    $response
+                );
+
+                foreach ($errorObjects as $error) {
+                    $errorException->addError($error);
+                }
+
+                throw $errorException;
             }
         } catch (SoapFault $e) {
             $message = $e->getMessage();
