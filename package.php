@@ -9,7 +9,7 @@
  *
  * LICENSE:
  *
- * Copyright (c) 2008-2010 silverorange
+ * Copyright (c) 2008-2012 silverorange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@
  * @category  Payment
  * @package   Payment_PayPal_SOAP
  * @author    Michael Gauthier <mike@silverorange.com>
- * @copyright 2008-2009 silverorange
+ * @copyright 2008-2012 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  * @link      http://pear.php.net/package/Payment_PayPal_SOAP
  */
@@ -40,14 +40,15 @@
 require_once 'PEAR/PackageFileManager2.php';
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-$api_version     = '0.4.0';
+$api_version     = '0.5.0';
 $api_state       = 'beta';
 
-$release_version = '0.4.0';
+$release_version = '0.5.0';
 $release_state   = 'beta';
 $release_notes   =
-    " * Add 'useLocalWsdl' that can work around bad WSDL files hosted by " .
-    "PayPal\n";
+    " * Add multi-errors handling. Note: this is a BC break if you used the " .
+    "Payment_PayPal_SOAP_ErrorException and " .
+    "Payment_PayPal_SOAP_ExpiredTokenException classes.\n";
 
 $description =
     "This package provides an easy-to-use wrapper of PHP 5's SOAP client " .
