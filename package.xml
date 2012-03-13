@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.3" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
     http://pear.php.net/dtd/tasks-1.0.xsd
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
@@ -17,11 +17,11 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
   <email>mike@silverorange.com</email>
   <active>yes</active>
  </lead>
- <date>2011-08-05</date>
- <time>11:16:22</time>
+ <date>2012-03-13</date>
+ <time>15:41:18</time>
  <version>
-  <release>0.4.0</release>
-  <api>0.4.0</api>
+  <release>0.5.0</release>
+  <api>0.5.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -29,7 +29,7 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
  </stability>
  <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
  <notes>
-* Add &apos;useLocalWsdl&apos; that can work around bad WSDL files hosted by PayPal
+* Add multi-errors handling. Note: this is a BC break if you used the Payment_PayPal_SOAP_ErrorException and Payment_PayPal_SOAP_ExpiredTokenException classes.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -52,6 +52,7 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
    <dir name="Payment">
     <dir name="PayPal">
      <dir name="SOAP">
+      <file name="Error.php" role="php" />
       <file name="Exceptions.php" role="php" />
      </dir> <!-- /Payment/PayPal/SOAP -->
      <file name="SOAP.php" role="php">
@@ -65,8 +66,11 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
     <file name="config.php.dist" role="test" />
     <file name="Debug.php" role="test" />
     <file name="ExpressCheckout.php" role="test" />
-    <file name="TestCase.php" role="test" />
+    <file name="TestCase.php" role="test">
+     <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
+    </file>
    </dir> <!-- /tests -->
+   <file name="README" role="data" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
@@ -102,6 +106,21 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
    <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
    <notes>
 * Add &apos;useLocalWsdl&apos; that can work around bad WSDL files hosted by PayPal
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.5.0</release>
+    <api>0.5.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2012-03-13</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+* Add multi-errors handling. Note: this is a BC break if you used the Payment_PayPal_SOAP_ErrorException and Payment_PayPal_SOAP_ExpiredTokenException classes.
    </notes>
   </release>
  </changelog>
