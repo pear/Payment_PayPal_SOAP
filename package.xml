@@ -17,10 +17,10 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
   <email>mike@silverorange.com</email>
   <active>yes</active>
  </lead>
- <date>2012-03-13</date>
- <time>15:41:18</time>
+ <date>2012-09-25</date>
+ <time>10:59:39</time>
  <version>
-  <release>0.5.0</release>
+  <release>0.5.1</release>
   <api>0.5.0</api>
  </version>
  <stability>
@@ -29,7 +29,7 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
  </stability>
  <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
  <notes>
-* Add multi-errors handling. Note: this is a BC break if you used the Payment_PayPal_SOAP_ErrorException and Payment_PayPal_SOAP_ExpiredTokenException classes.
+* Fixed API endpoint for sandbox signature authentication.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -70,6 +70,7 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
      <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
     </file>
    </dir> <!-- /tests -->
+   <file name="Payment_PayPal_SOAP-0.5.0.tgz" role="data" />
    <file name="README" role="data" />
   </dir> <!-- / -->
  </contents>
@@ -121,6 +122,21 @@ Note: Due to a PHP bug, PHP versions 5.2.2 to 5.2.6 are incompatible with this p
    <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
    <notes>
 * Add multi-errors handling. Note: this is a BC break if you used the Payment_PayPal_SOAP_ErrorException and Payment_PayPal_SOAP_ExpiredTokenException classes.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.5.1</release>
+    <api>0.5.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2012-09-25</date>
+   <license uri="http://www.opensource.org/licenses/mit-license.html">MIT</license>
+   <notes>
+* Fixed API endpoint for sandbox signature authentication.
    </notes>
   </release>
  </changelog>

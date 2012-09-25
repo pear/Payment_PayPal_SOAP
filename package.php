@@ -43,12 +43,10 @@ PEAR::setErrorHandling(PEAR_ERROR_DIE);
 $api_version     = '0.5.0';
 $api_state       = 'beta';
 
-$release_version = '0.5.0';
+$release_version = '0.5.1';
 $release_state   = 'beta';
 $release_notes   =
-    " * Add multi-errors handling. Note: this is a BC break if you used the " .
-    "Payment_PayPal_SOAP_ErrorException and " .
-    "Payment_PayPal_SOAP_ExpiredTokenException classes.\n";
+    " * Fixed API endpoint for sandbox signature authentication. \n";
 
 $description =
     "This package provides an easy-to-use wrapper of PHP 5's SOAP client " .
