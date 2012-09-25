@@ -224,7 +224,7 @@ class Payment_PayPal_SOAP
     static private $_apiEndpoints = array(
         'sandbox' => array(
             'certificate' => 'https://api.sandbox.paypal.com/2.0/',
-            'signature'   => 'https://api.sandbox.paypal.com/2.0/'
+            'signature'   => 'https://api-3t.sandbox.paypal.com/2.0/'
         ),
         'live'    => array(
             'certificate' => 'https://api.paypal.com/2.0/',
