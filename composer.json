@@ -1,0 +1,23 @@
+{
+	"name"        : "pear/payment_paypal_soap",
+	"description" : "Provides an easy-to-use wrapper of PHP 5's SOAP client for use with the PayPal SOAP API.",
+	"type"        : "library",
+	"keywords"    : [ "paypal", "soap" ],
+	"homepage"    : "https://github.com/pear/Payment_PayPal_SOAP",
+	"license"     : "MIT",
+	"authors"     : [
+		{
+			"name"  : "Michael Gauthier",
+			"email" : "mike@silverorange.com"
+		}
+	],
+	"require"     : {
+		"php"      : ">=5.1.0,<=5.2.1,>=5.2.7",
+		"ext-soap" : "*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Payment_PayPal_SOAP" : ""
+		}
+	}
+}
