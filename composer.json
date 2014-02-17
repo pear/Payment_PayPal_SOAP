@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Payment_PayPal_SOAP": ""
+            "Payment": "./"
         }
     },
     "include-path": [
