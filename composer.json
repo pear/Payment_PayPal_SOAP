@@ -1,23 +1,37 @@
 {
-	"name"        : "pear/payment_paypal_soap",
-	"description" : "Provides an easy-to-use wrapper of PHP 5's SOAP client for use with the PayPal SOAP API.",
-	"type"        : "library",
-	"keywords"    : [ "paypal", "soap" ],
-	"homepage"    : "https://github.com/pear/Payment_PayPal_SOAP",
-	"license"     : "MIT",
-	"authors"     : [
-		{
-			"name"  : "Michael Gauthier",
-			"email" : "mike@silverorange.com"
-		}
-	],
-	"require"     : {
-		"php"      : ">=5.1.0,!=5.2.2,!=5.2.3,!=5.2.4,!=5.2.5,!=5.2.6",
-		"ext-soap" : "*"
-	},
-	"autoload": {
-		"psr-0": {
-			"Payment_PayPal_SOAP" : ""
-		}
-	}
+    "name": "pear/payment_paypal_soap",
+    "description": "Provides an easy-to-use wrapper of PHP 5's SOAP client for use with the PayPal SOAP API.",
+    "type": "library",
+    "keywords": [
+        "paypal",
+        "soap"
+    ],
+    "homepage": "https://github.com/pear/Payment_PayPal_SOAP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Gauthier",
+            "email": "mike@silverorange.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.1.0,!=5.2.2,!=5.2.3,!=5.2.4,!=5.2.5,!=5.2.6",
+        "ext-soap": "*",
+        "pear/pear_exception": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Payment": "./"
+        }
+    },
+    "include-path": [
+        "./"
+    ],
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Payment_PayPal_SOAP",
+        "source": "https://github.com/pear/Payment_PayPal_SOAP"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
 }
